@@ -9,7 +9,6 @@
   "author": "Small Hadron Collider",
   "license": "MIT",
   "dependencies": {
-    "ramda": "0.8.*"
   },
   "devDependencies": {
     "buster": "0.7.*"

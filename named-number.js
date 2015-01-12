@@ -1,11 +1,11 @@
 "use strict";
 
-var R = require("ramda");
+var L = require("library");
 
 var namedNumberDictionary, orderedNamedNumberDictionary;
 
-var getDictionaryName = R.prop(0);
-var getDictionaryValue = R.prop(1);
+var getDictionaryName = L.prop(0);
+var getDictionaryValue = L.prop(1);
 
 var exponentSplit = function (value) {
     var exponential = value.toExponential(),
@@ -15,8 +15,8 @@ var exponentSplit = function (value) {
         exponent = 0;
 
     if (match && match.length >= 3) {
-        significand = +R.prop(1, match);
-        exponent = +R.prop(2, match);
+        significand = +match[1];
+        exponent = +match[2];
     }
 
     return {
@@ -26,7 +26,7 @@ var exponentSplit = function (value) {
 };
 
 var zeroPad = function (amount) {
-    return amount > 0 ? R.repeatN("0", amount).join("") : "";
+    return amount > 0 ? new Array(amount + 1).join("0") : "";
 };
 
 var addCommas = function (string) {
@@ -41,10 +41,10 @@ var addCommas = function (string) {
 
 var format = function (significand, exponent) {
     var split = significand.toString().split("."),
-        string = R.head(split);
+        string = split[0];
 
     if (split.length > 1) {
-        string += R.prop(1, split).substr(0, exponent);
+        string += split[1].substr(0, exponent);
     }
 
     string += zeroPad(exponent - string.length + 1);
@@ -69,13 +69,13 @@ var parseString = function (string) {
     }
 
     if (matches && matches.length === 2) {
-        split = R.prop(1, matches).split(/\s+/);
+        split = matches[1].split(/\s+/);
 
-        R.forEach(function (value) {
+        L.forEach(function (value) {
             cur = value.toLowerCase();
 
-            if (R.has(cur, namedNumberDictionary)) {
-                exponent += R.prop(cur, namedNumberDictionary);
+            if (namedNumberDictionary.hasOwnProperty(cur)) {
+                exponent += namedNumberDictionary[cur];
             }
         }, split);
 
@@ -91,9 +91,9 @@ var parseString = function (string) {
 
 var getName = function (significand, exponent) {
     var join = [],
-        highestNumber = R.head(orderedNamedNumberDictionary),
+        highestNumber = orderedNamedNumberDictionary[0],
 
-        exponentCheck = R.forEach(function (number) {
+        exponentCheck = L.forEach(function (number) {
             if (exponent < getDictionaryValue(number)) {
                 return false;
             }
@@ -125,11 +125,11 @@ var namedNumber = function (value) {
         throw new Error("Named Number dictionary not set");
     }
 
-    if (R.is(String, value)) {
+    if (L.isString(value)) {
         value = parseString(value);
     }
 
-    if (!R.is(Number, value) || isNaN(value)) {
+    if (!L.isNumber(value) || isNaN(value)) {
         throw {
             type: "invalidNumber",
             value: value
@@ -173,7 +173,7 @@ var namedNumber = function (value) {
 
 namedNumber.setDictionary = function (numberDictionary) {
     namedNumberDictionary = numberDictionary;
-    orderedNamedNumberDictionary = R.sortBy(getDictionaryValue, R.toPairs(namedNumberDictionary));
+    orderedNamedNumberDictionary = L.sortBy(1, L.toPairs(namedNumberDictionary));
     return namedNumber;
 };
 
