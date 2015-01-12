@@ -2,7 +2,7 @@
 
 var R = require("ramda");
 
-var largeNumberDictionary, orderedLargeNumberDictionary;
+var namedNumberDictionary, orderedNamedNumberDictionary;
 
 var getDictionaryName = R.prop(0);
 var getDictionaryValue = R.prop(1);
@@ -74,8 +74,8 @@ var parseString = function (string) {
         R.forEach(function (value) {
             cur = value.toLowerCase();
 
-            if (R.has(cur, largeNumberDictionary)) {
-                exponent += R.prop(cur, largeNumberDictionary);
+            if (R.has(cur, namedNumberDictionary)) {
+                exponent += R.prop(cur, namedNumberDictionary);
             }
         }, split);
 
@@ -91,7 +91,7 @@ var parseString = function (string) {
 
 var getName = function (significand, exponent) {
     var join = [],
-        highestNumber = R.head(orderedLargeNumberDictionary),
+        highestNumber = R.head(orderedNamedNumberDictionary),
 
         exponentCheck = R.forEach(function (number) {
             if (exponent < getDictionaryValue(number)) {
@@ -106,7 +106,7 @@ var getName = function (significand, exponent) {
     }
 
     while (exponent >= getDictionaryValue(highestNumber)) {
-        exponentCheck(orderedLargeNumberDictionary);
+        exponentCheck(orderedNamedNumberDictionary);
         exponent -= getDictionaryValue(highestNumber);
         join.unshift(getDictionaryName(highestNumber));
     }
@@ -117,12 +117,12 @@ var getName = function (significand, exponent) {
     return join.join(" ");
 };
 
-var largeNumber = function (value) {
+var namedNumber = function (value) {
     var self = {},
         name, split, significand, exponent;
 
-    if (!largeNumberDictionary) {
-        throw new Error("Large Number dictionary not set");
+    if (!namedNumberDictionary) {
+        throw new Error("Named Number dictionary not set");
     }
 
     if (R.is(String, value)) {
@@ -171,10 +171,10 @@ var largeNumber = function (value) {
     return self;
 };
 
-largeNumber.setDictionary = function (numberDictionary) {
-    largeNumberDictionary = numberDictionary;
-    orderedLargeNumberDictionary = R.sortBy(getDictionaryValue, R.toPairs(largeNumberDictionary));
-    return largeNumber;
+namedNumber.setDictionary = function (numberDictionary) {
+    namedNumberDictionary = numberDictionary;
+    orderedNamedNumberDictionary = R.sortBy(getDictionaryValue, R.toPairs(namedNumberDictionary));
+    return namedNumber;
 };
 
-module.exports = largeNumber;
+module.exports = namedNumber;

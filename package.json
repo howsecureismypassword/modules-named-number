@@ -1,8 +1,8 @@
 {
-  "name": "large-number",
+  "name": "named-number",
   "version": "0.1.0",
-  "description": "Converts numbers to named large numbers",
-  "main": "large-number.js",
+  "description": "Converts numbers to named named numbers",
+  "main": "named-number.js",
   "scripts": {
     "test": "node test"
   },
