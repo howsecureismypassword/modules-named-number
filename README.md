@@ -1,8 +1,6 @@
 # How Secure Is My Password
 ## Named Numbers
 
-### Usage
-
 ```javascript
 var namedNumber = require("named-number");
 var number = namedNumber(20000000);
