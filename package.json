@@ -8,6 +8,10 @@
   },
   "author": "Small Hadron Collider",
   "license": "MIT",
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/howsecureismypassword/named-number.git"
+  },
   "dependencies": {
     "library": "git://github.com/howsecureismypassword/library.git#develop"
   },
