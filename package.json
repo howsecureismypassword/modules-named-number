@@ -1,6 +1,6 @@
 {
   "name": "hsimp-named-number",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Converts numbers to named named numbers",
   "main": "named-number.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "url" : "http://github.com/howsecureismypassword/named-number.git"
   },
   "dependencies": {
-    "hsimp-library": "0.1.0"
+    "hsimp-library": "0.1.*"
   },
   "devDependencies": {
     "buster": "0.7.*"

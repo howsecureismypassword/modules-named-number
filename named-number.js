@@ -1,6 +1,6 @@
 "use strict";
 
-var L = require("library");
+var L = require("hsimp-library");
 
 var namedNumberDictionary, orderedNamedNumberDictionary;
 
