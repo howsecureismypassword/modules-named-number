@@ -112,7 +112,12 @@ var getName = function (significand, exponent) {
     }
 
     significand = Math.round(significand * Math.pow(10, exponent));
-    join.unshift(format(significand.toString()));
+
+    var split = exponentSplit(significand),
+        sig = split.significand,
+        exp = split.exponent;
+
+    join.unshift(format(sig.toString(), exp));
 
     return join.join(" ");
 };

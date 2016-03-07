@@ -178,6 +178,11 @@ buster.testCase("named-number", {
                 assert.same(n, '123 million 456 thousand and 789');
             },
 
+            '7.33991620928719e+148': function () {
+                var n = namedNumber(7.33991620928719e+148).getName();
+                assert.same(n, '73,399,162,092,871,900,000,000,000 quadragintillion');
+            },
+
             '1.2534e-40': function () {
                 var n = namedNumber(1.2534e-40).getName();
                 assert.same(n, '0.00000000000000000000000000000000000000012534');
